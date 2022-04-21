@@ -14,7 +14,8 @@
     [Parameter]
     public EventCallback OnCancelled { get; set; }
     [Parameter]
-    public EventCallback OnUpdated { get; set; }
+    //public EventCallback OnUpdated { get; set; }
+    public EventCallback<string> OnUpdated { get; set; }
 
     async Task Update()
     {
@@ -23,6 +24,7 @@
 
     async Task Cancel()
     {
-        await OnCancelled.InvokeAsync(MessageText);
+        //await OnCancelled.InvokeAsync(MessageText);
+        await OnCancelled.InvokeAsync(EventArgs.Empty);
     }
 }

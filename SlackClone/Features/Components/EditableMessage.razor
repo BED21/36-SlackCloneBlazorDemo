@@ -2,8 +2,8 @@
     @if (editMode)
     {
         <EditMessage MessageText="@Details.Message"
-                    OnUpdated="@HandleMessageChanged"
-                    OnCancelled="@HandleEditCancelled"/>
+                 OnUpdated="@HandleMessageChanged"
+                 OnCancelled="@HandleEditCancelled" />
     }
     else
     {
@@ -15,13 +15,13 @@
         }
 
         <div class="message"
+         @onclick="ToggleEdit"
          @onmouseover="ShowOverlay"
-         @onmouseout="HideOverlay"
-         @onclick="ToggleEdit">
+         @onmouseout="HideOverlay">
+
             <Message Details="Details" />
         </div>
     }
-
 </div>
 
 @code {
@@ -29,7 +29,14 @@
     public SlackMessage Details { get; set; }
 
     private bool overlayVisible;
+
     private bool editMode;
+
+    void ToggleEdit()
+    {
+        editMode = true;
+        overlayVisible = false;
+    }
 
     void ShowOverlay()
     {
@@ -41,20 +48,14 @@
         overlayVisible = false;
     }
 
-    void ToggleEdit()
+    void HandleEditCancelled()
     {
-        editMode = true;
-        overlayVisible = false;
-    }
-
-    void HandleMessageChanged(string NewMessage)
-    {
-        Details.Message = NewMessage;
         editMode = false;
     }
 
-    void HandleEditCancelled()
+    void HandleMessageChanged(string newMessage)
     {
+        Details.Message = newMessage;
         editMode = false;
     }
 }
